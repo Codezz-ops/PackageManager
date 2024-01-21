@@ -1,6 +1,6 @@
-# GPM - Go Package Manger
+# WhaleC - Docker Package Manger
 
-GPM is a simple cross-platform package manager developed in Golang.
+WhaleC is a simple cross-platform package manager developed in C.
 
 <!-- TOC -->
 - [Installation](#installation)
@@ -24,7 +24,7 @@ git clone https://github.com/Codezz-ops/PackageManager.git
 ### Build the binary
 
 ```
-make build
+cmake -S . -B build
 ```
 
 ## Download Binary (Recommended)
@@ -33,19 +33,16 @@ You can download the latest binary from the [releases page](https://github.com/C
 
 ### Usage 
 
-Once you have GPM installed, you can use it as follows:
+Once you have WhaleC installed, you can use it as follows:
 
 ```
 # Example usage
-gpm install <package-name>
+whalec install <image>
 ```
 
 ## Features 
 - Cross-platform support
 - Simple and lightweight
-
-## Future Updates
-- [ ] Add GUI 
 
 ## Contributing
 Feel free to contribute by opening issues or submitting pull requests.
