@@ -49,4 +49,4 @@ Feel free to contribute by opening issues or submitting pull requests.
 
 ## License
 
-This project is licensed under the [GPL-2.0](https://github.com/Codezz-ops/PackageManager/blob/main/LICENSE)
+This project is licensed under the [GPL-2.0](https://github.com/Codezz-ops/PackageManager/blob/main/COPYING)
