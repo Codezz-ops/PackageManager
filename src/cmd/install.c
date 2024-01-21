@@ -5,15 +5,17 @@
 
 #define MAX_COMMAND_LEN 256
 
-void installDockerContainer(const char *image, const char *tag) {
+void installDockerContainer(const char *image, const char *imagetag) {
+    const char *tag = (imagetag != NULL) ? imagetag : "latest";
+
     char dockerCommand[MAX_COMMAND_LEN];
     snprintf(dockerCommand, sizeof(dockerCommand), "docker pull %s:%s", image, tag);
 
     int result = system(dockerCommand);
 
     if (result == 0) {
-        printf("Docker container %s successfully installed\n", image);
+        printf("Docker container %s:%s successfully installed\n", image, tag);
     } else {
-        fprintf(stderr, "Error installing Docker container.\n");
+        fprintf(stderr, "Error installing Docker container %s:%s.\n", image, tag);
     }
 }

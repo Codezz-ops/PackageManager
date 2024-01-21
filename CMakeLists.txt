@@ -9,6 +9,7 @@ set(WHALEC_HEADER_FILES
     src/headers/search.h
     src/headers/uninstall.h
     src/headers/version.h
+    src/headers/list.h
 )
 
 set(WHALEC_SOURCE_FILES
@@ -17,6 +18,7 @@ set(WHALEC_SOURCE_FILES
     src/cmd/search.c
     src/cmd/uninstall.c
     src/cmd/version.c
+    src/cmd/list.c
 )
 
 add_executable(whalec ${WHALEC_HEADER_FILES} ${WHALEC_SOURCE_FILES})
