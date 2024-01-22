@@ -48,7 +48,7 @@ whalec install <image>
 Feel free to contribute by opening issues or submitting pull requests.
 
 ## TODO
-[ ] Add progress bar
+- [ ] Add progress bar
 
 ## License
 
