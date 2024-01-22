@@ -9,7 +9,7 @@ void installDockerContainer(const char *image, const char *imagetag) {
     const char *tag = (imagetag != NULL) ? imagetag : "latest";
 
     char dockerCommand[MAX_COMMAND_LEN];
-    snprintf(dockerCommand, sizeof(dockerCommand), "docker pull %s:%s", image, tag);
+    snprintf(dockerCommand, sizeof(dockerCommand), "docker pull %s:%s > /dev/null 2>&1", image, tag);
 
     int result = system(dockerCommand);
 
