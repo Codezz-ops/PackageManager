@@ -47,6 +47,9 @@ whalec install <image>
 ## Contributing
 Feel free to contribute by opening issues or submitting pull requests.
 
+## TODO
+[ ] Add progress bar
+
 ## License
 
 This project is licensed under the [GPL-2.0](https://github.com/Codezz-ops/PackageManager/blob/main/COPYING)
