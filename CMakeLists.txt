@@ -5,20 +5,20 @@ project(whalec)
 set(CMAKE_CXX_STANDARD 20)
 
 set(WHALEC_HEADER_FILES
-    src/headers/install.h
-    src/headers/search.h
-    src/headers/uninstall.h
-    src/headers/version.h
-    src/headers/list.h
+    src/headers/install.hpp
+    src/headers/search.hpp
+    src/headers/uninstall.hpp
+    src/headers/version.hpp
+    src/headers/list.hpp
 )
 
 set(WHALEC_SOURCE_FILES
-    src/main.c
-    src/cmd/install.c
-    src/cmd/search.c
-    src/cmd/uninstall.c
-    src/cmd/version.c
-    src/cmd/list.c
+    src/main.cpp
+    src/cmd/install.cpp
+    src/cmd/search.cpp
+    src/cmd/uninstall.cpp
+    src/cmd/version.cpp
+    src/cmd/list.cpp
 )
 
 add_executable(whalec ${WHALEC_HEADER_FILES} ${WHALEC_SOURCE_FILES})
