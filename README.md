@@ -29,7 +29,7 @@ cmake -S . -B build
 
 ## Download Binary (Recommended)
 
-You can download the latest binary from the [releases page](https://github.com/Codezz-ops/PackageManager/releases).
+You can download the latest binary from the [releases page](https://github.com/Codezz-ops/WhaleC/releases).
 
 ### Usage 
 
