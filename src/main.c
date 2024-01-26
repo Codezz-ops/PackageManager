@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-#include "headers/list.h"
-#include "headers/version.h"
-#include "headers/search.h"
-#include "headers/install.h"
-#include "headers/uninstall.h"
+#include "headers/cmd/list.h"
+#include "headers/cmd/search.h"
+#include "headers/cmd/version.h"
+#include "headers/utils/install.h"
+#include "headers/utils/uninstall.h"
 
 void printUsage(const char *programName) {
     printf("Usage: %s [options]\n", programName);

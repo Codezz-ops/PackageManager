@@ -1,12 +1,11 @@
-#include "../headers/list.h"
+#include "../headers/cmd/list.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 void listInstalledImages(void) {
     FILE *pipe = popen("docker images", "r");
     if (!pipe) {
-        fprintf(stderr, "Error opening pipe for command.\n");
+        fprintf(stderr, "Error opening pip for command.\n");
         return;
     }
 

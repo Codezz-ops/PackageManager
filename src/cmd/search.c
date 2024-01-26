@@ -1,32 +1,22 @@
-#include "../headers/search.h"
+#include "../headers/cmd/search.h"
+#include "../lib/colors.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-
-#define MAX_REPO_NAME_LEN 256
-#define MAX_DESCRIPTION_LEN 256
-#define MAX_URL_LEN 256
-#define MAX_RESPONSE_LEN 4096
-
-#define REPO_NAME_KEY "repo_name"
-#define DESCRIPTION_KEY "short_description"
-#define STARS_KEY "star_count"
-#define PULLS_KEY "pull_count"
 
 struct MemoryStruct {
     char *memory;
     size_t size;
 };
 
-static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     size_t realsize = size * nmemb;
     struct MemoryStruct *mem = (struct MemoryStruct *)userp;
 
     mem->memory = realloc(mem->memory, mem->size + realsize + 1);
     if (mem->memory == NULL) {
-        fprintf(stderr, "Memory allocation error\n");
-        return 0;
+        fprintf(stderr, LIGHT_RED "Memory allocation error" RESET "\n");
+        exit(1);
     }
 
     memcpy(&(mem->memory[mem->size]), contents, realsize);
@@ -42,21 +32,22 @@ void cleanupMemory(struct MemoryStruct *chunk) {
     chunk->size = 0;
 }
 
-static void printDockerInfo(const char *jsonResponse) {
-    const char *repoNameStart = "\"" REPO_NAME_KEY "\":\"";
-    const char *descriptionStart = "\"" DESCRIPTION_KEY "\":\"";
-    const char *starsStart = "\"" STARS_KEY "\":";
-    const char *pullsStart = "\"" PULLS_KEY "\":";
+void printDockerInfo(const char *jsonResponse) {
+    const char *repoNameStart = "\"" "repo_name" "\":\"";
+    const char *descriptionStart = "\"" "short_description" "\":\"";
+    const char *starsStart = "\"" "star_count" "\":";
+    const char *pullsStart = "\"" "pull_count" "\":";
 
     const char *currentPos = jsonResponse;
     while ((currentPos = strstr(currentPos, repoNameStart)) != NULL) {
         currentPos += strlen(repoNameStart);
         const char *repoNameEnd = strchr(currentPos, '\"');
-        if (!repoNameEnd) break;
-
-        char repoName[MAX_REPO_NAME_LEN];
+        if (!repoNameEnd)
+            break;
+        
+        char repoName[256];
         strncpy(repoName, currentPos, repoNameEnd - currentPos);
-        repoName[MAX_REPO_NAME_LEN - 1] = '\0';
+        repoName[256 - 1] = '\0';
 
         currentPos = strstr(currentPos, descriptionStart);
         if (!currentPos) break;
@@ -64,9 +55,9 @@ static void printDockerInfo(const char *jsonResponse) {
         const char *descriptionEnd = strchr(currentPos, '\"');
         if (!descriptionEnd) break;
 
-        char description[MAX_DESCRIPTION_LEN];
+        char description[256];
         strncpy(description, currentPos, descriptionEnd - currentPos);
-        description[MAX_DESCRIPTION_LEN - 1] = '\0';
+        description[256 - 1] = '\0';
 
         currentPos = strstr(currentPos, starsStart);
         if (!currentPos) break;
@@ -86,8 +77,8 @@ static void printDockerInfo(const char *jsonResponse) {
     }
 }
 
-void searchDockerImage(const char *image) {
-    CURL *curl;
+void searchDockerImage(const char* imageName) {
+        CURL *curl;
     CURLcode res;
     struct MemoryStruct chunk;
 
@@ -102,8 +93,8 @@ void searchDockerImage(const char *image) {
         }
         chunk.size = 0;
 
-        char searchUrl[MAX_URL_LEN];
-        snprintf(searchUrl, sizeof(searchUrl), "https://hub.docker.com/v2/search/repositories/?query=%s", image);
+        char searchUrl[256];
+        snprintf(searchUrl, sizeof(searchUrl), "https://hub.docker.com/v2/search/repositories/?query=%s", imageName);
 
         curl_easy_setopt(curl, CURLOPT_URL, searchUrl);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);

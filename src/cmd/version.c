@@ -1,4 +1,4 @@
-#include "../headers/version.h"
+#include "../headers/cmd/version.h"
 #include <stdio.h>
 
 const char* getWhaleCVersion(void) {

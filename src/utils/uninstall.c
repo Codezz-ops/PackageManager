@@ -1,20 +1,19 @@
-#include "../headers/uninstall.h"
+#include "../headers/utils/uninstall.h"
+#include "../lib/colors.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-#define MAX_COMMAND_LEN 256
 
 void uninstallDockerContainer(const char *imageName, const char *imageTag) {
     const char *tag = (imageTag != NULL) ? imageTag : "latest";
 
-    char dockerCommand[MAX_COMMAND_LEN];
+    char dockerCommand[256];
     snprintf(dockerCommand, sizeof(dockerCommand), "docker rmi %s:%s", imageName, tag);
 
     int result = system(dockerCommand);
 
     if (result == 0) {
-        printf("Docker container %s:%s successfully uninstalled\n", imageName, tag);
+        printf(LIGHT_BLUE "Docker container %s:%s successfully uninstalled" RESET "\n", imageName, tag);
     } else {
-        fprintf(stderr, "Error uninstalling Docker container %s:%s.\n", imageName, tag);
+        fprintf(stderr, LIGHT_RED "Error uninstalling Docker container %s:%s." RESET "\n", imageName, tag);
     }
 }
