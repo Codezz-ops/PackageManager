@@ -1,9 +1,18 @@
 #include "../headers/search.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
 
+#define MAX_REPO_NAME_LEN 256
+#define MAX_DESCRIPTION_LEN 256
 #define MAX_URL_LEN 256
 #define MAX_RESPONSE_LEN 4096
+
+#define REPO_NAME_KEY "repo_name"
+#define DESCRIPTION_KEY "short_description"
+#define STARS_KEY "star_count"
+#define PULLS_KEY "pull_count"
 
 struct MemoryStruct {
     char *memory;
@@ -33,31 +42,31 @@ void cleanupMemory(struct MemoryStruct *chunk) {
     chunk->size = 0;
 }
 
-void printDockerInfo(const char *jsonResponse) {
-    const char* repoNameStart = "\"repo_name\":\"";
-    const char* descriptionStart = "\"short_description\":\"";
-    const char* starsStart = "\"star_count\":";
-    const char* pullsStart = "\"pull_count\":";
+static void printDockerInfo(const char *jsonResponse) {
+    const char *repoNameStart = "\"" REPO_NAME_KEY "\":\"";
+    const char *descriptionStart = "\"" DESCRIPTION_KEY "\":\"";
+    const char *starsStart = "\"" STARS_KEY "\":";
+    const char *pullsStart = "\"" PULLS_KEY "\":";
 
-    const char* currentPos = jsonResponse;
+    const char *currentPos = jsonResponse;
     while ((currentPos = strstr(currentPos, repoNameStart)) != NULL) {
         currentPos += strlen(repoNameStart);
-        const char* repoNameEnd = strchr(currentPos, '\"');
+        const char *repoNameEnd = strchr(currentPos, '\"');
         if (!repoNameEnd) break;
 
-        char repoName[256];
+        char repoName[MAX_REPO_NAME_LEN];
         strncpy(repoName, currentPos, repoNameEnd - currentPos);
-        repoName[repoNameEnd - currentPos] = '\0';
+        repoName[MAX_REPO_NAME_LEN - 1] = '\0';
 
         currentPos = strstr(currentPos, descriptionStart);
         if (!currentPos) break;
         currentPos += strlen(descriptionStart);
-        const char* descriptionEnd = strchr(currentPos, '\"');
+        const char *descriptionEnd = strchr(currentPos, '\"');
         if (!descriptionEnd) break;
 
-        char description[256];
+        char description[MAX_DESCRIPTION_LEN];
         strncpy(description, currentPos, descriptionEnd - currentPos);
-        description[descriptionEnd - currentPos] = '\0';
+        description[MAX_DESCRIPTION_LEN - 1] = '\0';
 
         currentPos = strstr(currentPos, starsStart);
         if (!currentPos) break;
@@ -87,6 +96,10 @@ void searchDockerImage(const char *image) {
 
     if (curl) {
         chunk.memory = malloc(1);
+        if (chunk.memory == NULL) {
+            fprintf(stderr, "Memory allocation error\n");
+            return;
+        }
         chunk.size = 0;
 
         char searchUrl[MAX_URL_LEN];
