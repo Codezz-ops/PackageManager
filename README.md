@@ -49,7 +49,7 @@ Feel free to contribute by opening issues or submitting pull requests.
 
 ## TODO
 - [ ] Add progress bar
-- [ ] Add color ouput
+- [X] Add color ouput
 
 ## License
 

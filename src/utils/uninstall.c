@@ -12,7 +12,7 @@ void uninstallDockerContainer(const char *imageName, const char *imageTag) {
     int result = system(dockerCommand);
 
     if (result == 0) {
-        printf(LIGHT_BLUE "Docker container %s:%s successfully uninstalled" RESET "\n", imageName, tag);
+        printf(LIGHT_BLUE "Docker container %s:(%s) successfully uninstalled" RESET "\n", imageName, tag);
     } else {
         fprintf(stderr, LIGHT_RED "Error uninstalling Docker container %s:%s." RESET "\n", imageName, tag);
     }
