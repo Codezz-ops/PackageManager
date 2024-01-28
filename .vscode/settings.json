@@ -1,0 +1,8 @@
+{
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+        "search.h": "c",
+        "colors.h": "c",
+        "install.h": "c"
+    }
+}
