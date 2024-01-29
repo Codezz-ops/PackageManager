@@ -1,7 +1,7 @@
 #include "../headers/cmd/list.h"
 #include <stdio.h>
 #include <string.h>
- e
+
 void listInstalledImages(void) {
   FILE *pipe = popen("docker images", "r");
   if (!pipe) {
